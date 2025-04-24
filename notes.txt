@@ -60,8 +60,8 @@ Capa              | Qué es en nuestro proyecto                                |
  Servicios        | Llamado real a API, fetch, headers                        | characters/services
  UI + Drivers     | Componentes React, Tailwind, rutas                        | characters/components + CharacterContainer
 Los componentes globales, como Spinner, ErrorBox, o useData, viven en shared/ porque tienen alcance global. Si algo es usado solo en characters/, entonces vive ahí.
-Si una feature va creciendo, es recomendable implementar un módulo contenedor.
-Si mañana agregamos favoritos:
+Al inicio no hace falta tener una aplicacion super dividida. Si una feature va creciendo, es recomendable implementar un módulo contenedor.
+Por ejemplo, si mañana agregamos más funcionalidades de favoritos:
 src/
 ├── favorites/
 │   ├── FavoriteContainer.tsx
@@ -78,13 +78,7 @@ Y no tocamos nada del módulo de personaje. Esa es una de las ventajas principal
 
 ----
 Next steps:
--Implementar esa estructura completamente
--Agregar contexto de personajes compartido.
--Conectar favoritos.
 -Meter tests unitarios para el adapter y el caso de uso.
 -Hacer lazy loading por feature.
-
 ----
-
-Notas:
 -Control de versiones en Github usando git.
