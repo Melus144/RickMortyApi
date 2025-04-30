@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, ReactNode } from 'react';
+import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import { Character } from '../../characters/domain/Character';
 
 interface CharactersContextType {
@@ -8,11 +8,22 @@ interface CharactersContextType {
   removeFavorite: (characterId: number) => void;
 }
 
+const FAVORITES_STORAGE_KEY = 'rick-morty-favorites';
+
 const CharactersContext = createContext<CharactersContextType | undefined>(undefined);
 
 export const CharactersProvider = ({ children }: { children: ReactNode }) => {
   const [characters, setCharacters] = useState<Character[]>([]);
-  const [favorites, setFavorites] = useState<Character[]>([]);
+  const [favorites, setFavorites] = useState<Character[]>(() => {
+    // Inicializar desde localStorage
+    const storedFavorites = localStorage.getItem(FAVORITES_STORAGE_KEY);
+    return storedFavorites ? JSON.parse(storedFavorites) : [];
+  });
+
+  // Guardar en localStorage cuando cambien los favoritos
+  useEffect(() => {
+    localStorage.setItem(FAVORITES_STORAGE_KEY, JSON.stringify(favorites));
+  }, [favorites]);
 
   const addFavorite = (character: Character) => {
     setFavorites(prev => [...prev, character]);
